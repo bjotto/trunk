@@ -1,0 +1,45 @@
+#{extends 'main.html' /} #{set title:'经营产品' /}
+<style>
+.font {
+	-moz-opacity: 1.0; /* Moz + FF */
+	opacity: 1.0;
+	top: 45%;
+	position: absolute;
+	z-index: 99;
+	text-align: center;
+	background: rgba(0, 0, 0, 0.4) none repeat scroll 0 0 !important;
+	/*实现FF背景透明，文字不透明*/
+	background: #000000;
+	width:92%;
+}
+</style>
+<div data-role="page" id="first">
+	<div data-role="header">
+		<a data-rel="back" data-icon="back">返回</a>
+		<h1>康众汽配连锁</h1>
+	</div>
+	<div data-role="content">
+		<img style="width: 100%; border-radius: 15px;"
+			src="@{'/public/images/product/all.jpg'}">
+		<div class="font">
+			<h3>快速、准确、全系列</h3>
+		</div>
+		
+		<ul data-role="listview">
+			<li><a href="#brakes">刹车片</a></li>
+		</ul>
+
+	</div>
+
+</div>
+
+<div data-role="page" id="brakes">
+	<div data-role="header">
+		<a data-rel="back" data-icon="back">返回</a>
+		<h1>康众汽配连锁</h1>
+	</div>
+	<div data-role="content">
+		<img style="width: 100%; border-radius: 15px;"
+			src="@{'/public/images/product/brakes.jpg'}" data-inset="true">
+	</div>
+</div>

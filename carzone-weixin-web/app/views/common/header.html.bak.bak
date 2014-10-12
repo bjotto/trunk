@@ -1,0 +1,6 @@
+<!-- 
+<div class="navbar">
+	<div class="logo" onclick="javascript:window.location.href='@{Application.index()}'" style="cursor: pointer;"></div>
+</div>
+-->
+

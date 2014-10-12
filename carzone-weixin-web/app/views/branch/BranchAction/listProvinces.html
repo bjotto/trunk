@@ -1,0 +1,22 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+<script type="text/javascript">
+$("#province").live("pagecreate",function(){
+	 $('li[class="province"]').click(function(){
+			var province = $(this).attr("province");
+			var urlTemp =  #{jsAction @branch.BranchAction.getCitys(':province') /};
+		    var url = urlTemp({province:province});
+		    window.location.href=url;
+	});
+});
+</script>
+<div data-role="page" id="province">
+	<div data-role="content">
+		<ul data-role="listview" data-filter="true" id="prolist"
+			data-filter-placeholder='请输入省份' data-header-theme="a">
+			#{list items:provinces, as:'province'}
+			<li class="province" province="${province.province}"><a>
+						${province.province} <span class="ui-li-count">${province.total}家门店</span></a></li>
+			#{/list}
+		</ul>
+	</div>
+</div>

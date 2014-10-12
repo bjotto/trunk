@@ -1,0 +1,112 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+<script src="@{'/public/javascripts/jquery.validate.min.js'}"
+	type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+	$("#carzone-form").validate({
+		submitHandler : function(form) {
+			$("#carzone-form").submit();
+		},
+		messages: {  
+            "carzone.storeName": {  
+                required: "门店名称必须填写（康众XX店）！" 
+            },
+            "carzone.cost":{
+            	number: "只能输入数字！" ,
+            	 required: "必须填写！" 
+            },
+            "carzone.peopleNum":{
+            	number: "只能输入数字！" ,
+           	 	required: "必须填写！" 
+            },
+            "carzone.reaction": {  
+                required: "必须填写！" 
+            },
+            "carzone.opinion": {  
+                required: "必须填写！" 
+            },
+            "carzone.defect": {  
+                required: "必须填写！" 
+            },
+            "carzone.advantage": {  
+                required: "必须填写！" 
+            },
+            "carzone.effect": {  
+                required: "必须填写！" 
+            }
+       	}
+	});
+})
+</script>
+
+<style>
+label.error  
+{  
+    display: inline-block;  
+    margin-left: 300px;  
+    padding: 5px 0 5px 20px;  
+    color: #F00;  
+    font-size: 12px;  
+    line-height: 12px;  
+    vertical-align: middle;  
+    color: Red;  
+    margin-top: 7px;  
+}  
+</style>
+<div data-role="page">
+
+	<div data-role="header">
+		<h1>
+			康众天天315，我承诺，你见证<br>活动小结
+		</h1>
+	</div>
+	<div data-role="content">
+		<form id ="carzone-form" method="post" action="@{saveCarzone315}" class="validate">
+			<div data-role="fieldcontain">
+				<label for="activeTime">活动日期：2014.03.10-03.30</label><br> <br>
+				<label for="storeName">门店名称：</label>
+				<input type="text" class="required" name="carzone.storeName"
+					id="storeName" placeholder="康众XX店"> <br> <br>
+					<div class="clear height20"></div> <label
+					for="cost">活动成本（元）：</label> <input type="number" name="carzone.cost"
+					id="cost" class="required" ><br> <br> <label for="peopleNum">签名人数（个）：</label>
+				<input type="number" class="required" name="carzone.peopleNum" id="peopleNum"><br>
+				<br>
+				<fieldset data-role="controlgroup" data-type="horizontal">
+					<legend>顾客反响： </legend>
+					<label for="active">积极</label> <input type="radio"
+						name="carzone.reaction" id="active" value="1" checked> <label
+						for="general">一般</label> <input type="radio"
+						name="carzone.reaction" id="general" value="2"> <label
+						for="cold">冷淡</label> <input type="radio" name="carzone.reaction"
+						id="cold" value="3">
+				</fieldset>
+				<br> <label for="opinion">顾客意见：</label>
+				<textarea id="opinion" name="carzone.opinion" class="required"></textarea>
+				<br> <br> <label for="effect">活动效果：</label>
+				<textarea id="effect" name="carzone.effect" class="required"></textarea>
+				<br> <br> <label for="advantage">优点总结：</label>
+				<textarea id="advantage" name="carzone.advantage" class="required"></textarea>
+				<br> <br> <label for="defect">缺点总结：</label>
+				<textarea id="defect" name="carzone.defect" class="required"></textarea>
+				<br> <br>
+				<fieldset data-role="controlgroup" data-type="horizontal"
+					data-theme="c">
+					<legend>是否愿意再举办此类活动： </legend>
+					<label for="yes">是</label> <input type="radio"
+						name="carzone.isAgain" id="yes" value="1" checked> <label for="no">否</label>
+					<input type="radio" name="carzone.isAgain" id="no" value="0">
+				</fieldset>
+				<br> <br> <br>
+				<fieldset class="ui-grid-a">
+					<div class="ui-block-a">
+						<button type="reset" data-theme="c">取消</button>
+					</div>
+					<div class="ui-block-b">
+						<button type="submit" data-theme="b">提交</button>
+					</div>
+				</fieldset>
+			</div>
+		</form>
+	</div>
+</div>

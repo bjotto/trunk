@@ -1,0 +1,42 @@
+#{list items:page.result, as:'question'}
+<input type="hidden" name="pageTotal" id="pageTotal"
+	value="${pageTotal}" />
+<input type="hidden" name="pageNumber" id="pageNumber"
+	value="${pageNumber}" />
+<input type="hidden" name="questionType" id="questionType"
+	value="${question?.type}" />
+<input type="hidden" name="questionId" id="questionId"
+	value="${question?.id}" />
+
+#{if question?.type == 1}
+<fieldset data-role="controlgroup">
+	<legend>${page?.pageNumber}.${question?.question}:</legend>
+	#{list items:question.answers, as:'answer'} <input type="radio"
+		class="question" value="${answer_index}" id="radio-${answer_index}"
+		name="answer" /> <label for="radio-${answer_index}"><em>${answer}</em></label>
+	<br> #{/list}
+</fieldset>
+#{/if} #{elseif question?.type == 2}
+<legend>${page?.pageNumber}.${question?.question}:</legend>
+#{list items:question.answers, as:'answer'}
+<fieldset data-role="controlgroup" data-type="horizontal">
+	<input type="checkbox" class="question" value="${answer_index}"
+		id="checkbox-${answer_index}" /> <label
+		for="checkbox-${answer_index}"><em>${answer}</em></label> <br>
+	#{/list}
+</fieldset>
+#{/elseif} #{elseif question?.type == 3}
+<div data-role="fieldcontain">
+	<label for="textarea">${page?.pageNumber}.${question?.question}:
+	</label>
+	<textarea cols="30" rows="8" name="textarea" id="textarea" style="font-size:15px;"
+		placeholder="${question?.suggestion}"></textarea>
+</div>
+#{/elseif} #{elseif question?.type == 4}
+<div data-role="fieldcontain">
+	<label for="textarea">${page?.pageNumber}.${question?.question}:
+	</label>
+	<textarea cols="32" rows="5" name="textarea" id="textarea" style="font-size:15px;"
+		placeholder="${question?.suggestion}" onkeyup="clearNoNum(this)"></textarea>
+</div>
+#{/elseif} #{/list}

@@ -1,0 +1,10 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<div class="content">
+	#{list items:page.result, as:"branch"}
+		<h2 class="head">店名：${branch?.shop}</h2>
+		<p><b>地址：${branch?.county}${branch?.address}</b></p>
+		<p><b>电话：${branch?.phone}</b></p>
+	#{/list}
+</div>

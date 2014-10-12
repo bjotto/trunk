@@ -1,0 +1,45 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+<link rel="stylesheet" href="@{'/public/stylesheets/carzone.css'}" />
+<div data-role="page">
+	<div data-role="header">
+		<h1>康众汽配连锁</h1>
+	</div>
+	<div data-role="content">
+		<div data-role="collapsible-set" data-inset="false"
+			data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+			<div data-role="collapsible">
+				<h3>康众公司</h3>
+				<p>
+					<a href="javascript:indexToListProvinces()">联系我们</a>
+				</p>
+				<p>
+					<a href="javascript:summary();">康众天天315，我承诺，你见证活动小结</a>
+				</p>
+			</div>
+			<div data-role="collapsible">
+				<h3>汽修学堂</h3>
+				<p>
+					<a href="javascript:enterName();">汽修学堂报名入口</a>
+				</p>
+			</div>
+			<!-- 
+			<div data-role="collapsible">
+				<h3>调查问卷</h3>
+				<p>
+					<a href="/allquestion.html" rel="external">马年到 码上有钱</a>
+				</p>
+				<p>
+					<a href="/questionnaires.html?classify=4" rel="external">员工收入和���活期望调查问卷</a>
+				</p>
+			</div>
+			
+			<div data-role="collapsible">
+				<h3>幸运大抽奖</h3>
+				<p>
+					<a href="/userInfo.html" rel="external">转盘抽奖</a>
+				</p>
+			</div>
+			 -->
+		</div>
+	</div>
+</div>

@@ -1,0 +1,194 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+<script type="text/javascript">
+
+$(document).on("pagecreate",function(event){
+	$("#radio-view-a").click();
+	});
+	function checkall() {
+		if (checkPlace() && checkCompany() && checkAddress() && checkUserName()
+				&& checkPostion() && checkMobile() && checkEmail()
+				&& checkOtherInfo() && checkOPostion()) {
+			$("#id-submit").submit();
+		}
+	}
+	function choseNum(value) {
+		if (value)
+			value = value / 1;
+		switch (value) {
+		case 1:
+			$("#otherPeople").hide();
+			$("#joinNum").val(1);
+			$("#otherInfo").val("");
+			$("#oPostion").val("");
+			break;
+		case 2:
+			$("#otherPeople").show();
+			$("#joinNum").val(2);
+			break;
+		}
+	}
+	function chose(value) {
+		$("#password").val(value);
+	}
+	function checkPlace() {
+		var value = $("#password").val();
+		if (value == null || value == "0") {
+			alert("请选择会场！");
+			return false;
+		}
+		return true;
+
+	}
+	function checkCompany() {
+		var value = $("#company").val();
+		if (value == null || value == "") {
+			alert("请填写单位名称！");
+			$("#company").focus();
+			return false;
+		}
+		return true;
+	}
+	function checkAddress() {
+		var value = $("#realName").val();
+		if (value == null || value == "") {
+			alert("请填写地址！");
+			$("#realName").focus();
+			return false;
+		}
+		return true;
+	}
+	function checkUserName() {
+		var value = $("#userName").val();
+		if (value == null || value == "") {
+			alert("请填写联系人！");
+			$("#userName").focus();
+			return false;
+		}
+		return true;
+	}
+	function checkPostion() {
+		var value = $("#postion").val();
+		if (value == null || value == "") {
+			alert("请填写职位！");
+			$("#postion").focus();
+			return false;
+		}
+		return true;
+	}
+	function checkMobile() {
+		var value = $("#mobile").val();
+		if (value == null || value == "") {
+			alert("请填写手机号码！");
+			$("#mobile").focus();
+			return false;
+		}
+		if (!checkMobileNumber(value)) {
+			alert("请填写正确的手机号码！");
+			$("#mobile").focus();
+			return false;
+		}
+		return true;
+	}
+	function checkMobileNumber(mobile) {
+		var reg = /^13[0-9]{9}$|^15[012356789]{1}[0-9]{8}$|^147[0-9]{8}$|^18[0-9]{9}$/;
+		if (reg.test(mobile)) {
+			return true;
+		} else
+			return false;
+	}
+	function checkEmail() {
+		var value = $("#email").val();
+		if (value == null || value == "") {
+			alert("请填写邮箱！");
+			$("#email").focus();
+			return false;
+		}
+		if(!checkEmailStr(value)){
+			alert("请填写正确的邮箱！");
+			$("#email").focus();
+			return false;
+		}
+		return true;
+	}
+	function checkEmailStr(value){
+		 var reg = /^(?:[a-z\d]+[_\-\+\.]?)*[a-z\d]+@(?:([a-z\d]+\-?)*[a-z\d]+\.)+([a-z]{2,})+$/; 
+         return reg.test(value) && value.length<50; 
+	}
+	function checkOtherInfo() {
+		var num = $("#joinNum").val();
+		num /= 1;
+		if (num == 2) {
+			var value = $("#otherInfo").val();
+			if (value == null || value == "") {
+				alert("请其他参会人员姓名！");
+				$("#otherInfo").focus();
+				return false;
+			}
+		}
+		return true;
+	}
+	function checkOPostion() {
+		var num = $("#joinNum").val();
+		num /= 1;
+		if (num == 2) {
+			var value = $("#oPostion").val();
+			if (value == null || value == "") {
+				alert("请其他参会人员职位！");
+				$("#oPostion").focus();
+				return false;
+			}
+		}
+		return true;
+	}
+</script>
+
+<div data-role="page" >
+	<div data-role="header">
+		<h1>微信小调查</h1>
+	</div>
+	<div data-role="content">
+		<form method="post" action="@{saveUser}" enctype="multipart/form-data">
+			<div data-role="fieldcontain">
+				<label for="foo">会场选择：</label> <select name="foo" id="foo"
+					onchange="chose(value)" value="0">
+					<option value="0">选择会场</option>
+					<option value="1">苏州</option>
+					<option value="2">无锡</option>
+					<option value="3">上海</option>
+				</select> <input type="hidden" name="user.password" id="password" value="0" />
+			</div>
+			<input type="hidden" name="user.type" value="5" />
+			<div data-role="fieldcontain">
+				<label for="company">单位名称：</label> <input type="text"
+					name="user.company" id="company" value="${user.company}" />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="realName">地址：</label> <input type="text"
+					name="user.realName" id="realName" value="${user.realName}" />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="userName">联系人：</label> <input type="text"
+					name="user.userName" id="userName" value="${user.userName}" />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="postion">职务：</label> <input type="text"
+					name="user.postion" id="postion" value="${user.postion}" />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="mobile">手机号码：</label> <input type="number"
+					name="user.mobile" id="mobile" value="${user.mobile}" />
+			</div>
+
+			
+			<fieldset class="ui-grid-a">
+				<div class="ui-block-a">
+					<button type="reset" data-theme="c">取消</button>
+				</div>
+				<div class="ui-block-b">
+					<button type="button" data-theme="b" id="id-submit"
+						onclick="checkall()">提交</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

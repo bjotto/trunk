@@ -1,0 +1,19 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+
+<div data-role="page">
+	<div data-role="content">
+		#{if promoCode != null}
+		<p>
+			您的优惠码为：<span style="color: #FC9014">${promoCode}</span>
+		</p>
+		<p>使用说明：</p>
+		<p>1.优惠码有效期：2014.01.01-2014.03.31，过期无效；</p>
+		<p>2.有效期内，在康众各门店、康众天猫商城单次消费满500元，凭码立减50元（必要时请提供提交的相关信息）；</p>
+		<p>3.优惠码不累计，每位用户、每家单位仅能享受一次优惠。</p>
+		#{/if} #{else}
+		<p>
+			<span style="color: #FC9014">对不起，暂无相关优惠券</span>
+		</p>
+		#{/else}
+	</div>
+</div>

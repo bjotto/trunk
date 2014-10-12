@@ -1,0 +1,29 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+<script type="text/javascript">
+function cityClick(city, id){
+	//点击某个市时显示相应的门店信息
+	$.ajax({
+		type:"POST",
+		dataType:"html",
+		url:"@{branch.BranchAction.branchs()}",
+		data:{city:city},
+		success:function(data){
+			cancelBranch("content brand");
+			$("#"+id).html(data);
+		}
+	})
+}
+function cancelBranch(content){
+	var branchs = document.getElementsByClassName(content);
+	for(var i=0; i<branchs.length; i++){
+		branchs[i].innerHTML = "";
+	}
+}
+</script>
+<div class="menu">
+	#{list items:citys, as:'city'}
+	<a href="javascript:cityClick('${city}', '${city_index}');">${city}</a> 
+	<div class="content brand" id="${city_index}"></div>
+	#{/list}
+</div>

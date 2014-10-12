@@ -1,0 +1,54 @@
+#{extends 'main.html' /} #{set title:'Home' /}
+
+
+
+<script type="text/javascript">
+function citys(province){
+	var temp =  #{jsAction @branch.BranchAction.cityMaps(':province') /}
+	var url = temp({province:province});
+	window.location.href= url;
+}	
+</script>
+
+<div data-role="page" data-position="fixed">
+	<div data-role="header">
+		<h1>康众汽配连锁</h1>
+	</div>
+	<!-- /header -->
+	<div data-role="content">
+		<ul data-role="listview">
+			#{list items:provinces, as:'province'}
+			<li><a href="javascript:citys('${province}')">${province}</a></li>
+			#{/list}
+		</ul>
+	</div>
+	<!-- /content -->
+	#{include "common/bottom.html" /}
+	<!-- /footer -->
+</div>
+<!-- /page -->
+
+
+<div data-role="page" id="nav2">
+	<div data-role="header">
+		<h1>Nav Screen 2</h1>
+	</div>
+	<!-- /header -->
+	<div data-role="content">Screen for Navigation Two</div>
+	<!-- /content -->
+	#{include "common/bottom.html" /}
+	<!-- /footer -->
+</div>
+<!-- /page -->
+
+<div data-role="page" id="dialogPopUp">
+	<div data-role="header">
+		<h1>Dialog Title</h1>
+	</div>
+	<!-- /header -->
+	<div data-role="content">This is a dialog box</div>
+	<!-- /content -->
+	#{include "common/bottom.html" /}
+	<!-- /footer -->
+</div>
+<!-- /page -->

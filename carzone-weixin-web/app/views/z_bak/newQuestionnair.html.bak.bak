@@ -1,0 +1,355 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+
+<script type="text/javascript">
+	var result = {};
+
+	$("#questionList").live("pagebeforecreate", function() {
+		var classify = $("#classify").val();
+		$.ajax({
+			type : "POST",
+			dataType : "html",
+			url : "@{news.NewsAction.questionnairPage()}",
+			data : {
+				pageNumber : 1,
+				classify : classify
+			},
+			success : function(data) {
+				if (data.length == 1) {
+					$("#ending").popup("open");
+				}
+				$("#questions").html(data);
+			}
+		});
+	});
+	function subInfo() {
+		var classify = $("#classify").val() / 1;
+		
+		var um = $("#userName").val();
+		var mobile = $("#mobile").val();
+		var otherInfo = $("#carNo").val();
+		
+		var company = $("#companyName").val();
+		var cpum = $("#companyUserName").val();
+		var cpMobile = $("#companyMobile").val();
+
+		
+		//1车主  2企业
+		switch (classify) {
+		case 1:
+			if (otherInfo.length == 0) {
+				alert("输入车牌号！");
+				return;
+			}
+			if (um.length == 0) {
+				alert("请输入姓名！");
+				return;
+			}
+			if (mobile.length == 0) {
+				alert("请输入手机号码！");
+				return;
+			}
+			if (mobile.length != 11) {
+				alert("请输入正确的手机号码！");
+				return;
+			}
+			break;
+		case 2:
+			if (company.length == 0) {
+				alert("请输入企业全称！");
+				return;
+			}
+			if (cpum.length == 0) {
+				alert("请输入姓名！");
+				return;
+			}
+			if (cpMobile.length == 0) {
+				alert("请输入手机号码！");
+				return;
+			}
+			if (cpMobile.length != 11) {
+				alert("请输入正确的手机号码！");
+				return;
+			}
+			break;
+		}
+		
+		$("#resultValue").val(JSON.stringify(result));
+		$("#rdata").val(JSON.stringify(result));
+
+		$.mobile.changePage("/news.NewsAction/saveResult", {
+			type : "post",
+			data : $("form#saveResponse").serialize(),
+			transition : "slide"
+		});
+		
+		switch (classify) {
+		case 1:
+			$("#customerInfo").popup("close");
+			break;
+		case 2:
+			$("#companyInfo").popup("close");
+			break;
+		}
+	}
+	function nextQuestion() {
+		var classify = $("#classify").val()/1;
+		var pageNumber = $("#pageNumber").val();
+		var total = $("#pageTotal").val();
+		var questionType = $("#questionType").val();
+		var questionId = $("#questionId").val();
+		var data = [];
+
+		if (total == null) {
+			$("#ending").popup("open");
+			return;
+		}
+		//1单选 2多选 3问答
+		questionType = questionType / 1;
+		switch (questionType) {
+		case 1:
+			var list = $('input:radio[class="question"]:checked').val();
+			if (list == null) {
+				$("#select").popup("open");
+				return;
+			}
+			data[0] = list;
+			break;
+		case 2:
+			$.each($(".question:checked"), function(i, n) {
+				data[i] = n.value;
+			});
+			if (data.length == 0) {
+				//alert("请选择！");
+				$("#select").popup("open");
+				return;
+			}
+			break;
+		case 3:
+			var textarea = $("#textarea").val();
+			if (textarea.length == 0) {
+				$("#write").popup("open");
+				return;
+			}
+			data[0] = textarea;
+			break;
+		}
+
+		result[questionId] = data;
+		if (pageNumber == total) {
+			switch (classify) {
+			case 1:
+				$("#customerInfo").popup("open");
+				break;
+			case 2:
+				$("#companyInfo").popup("open");
+				break;
+			}
+			return;
+		}
+		pageNumber++;
+		$("#pageNumber").val(pageNumber);
+
+		$
+				.ajax({
+					type : "POST",
+					dataType : "html",
+					url : "@{news.NewsAction.questionnairPage()}",
+					data : {
+						pageNumber : pageNumber,
+						classify : classify
+					},
+					success : function(data) {
+						if (total == pageNumber) {
+							var nextHtml = "";
+							nextHtml += '<span class="ui-btn-inner">';
+							nextHtml += '<span class="ui-btn-text">';
+							nextHtml += '提交';
+							nextHtml += '</span>';
+							nextHtml += '<span class="ui-icon ui-icon-forward ui-icon-shadow">';
+							nextHtml += '</span>';
+							nextHtml += '</span>';
+							$("#next").html(nextHtml);
+						} else {
+							var nextHtml = "";
+							nextHtml += '<span class="ui-btn-inner">';
+							nextHtml += '<span class="ui-btn-text">';
+							nextHtml += '下一题';
+							nextHtml += '</span>';
+							nextHtml += '<span class="ui-icon ui-icon-forward ui-icon-shadow">';
+							nextHtml += '</span>';
+							nextHtml += '</span>';
+							$("#next").html(nextHtml);
+						}
+						if (pageNumber > 1) {
+							var nextHtml = "";
+							nextHtml += '<span class="ui-btn-inner">';
+							nextHtml += '<span class="ui-btn-text">';
+							nextHtml += '上一题';
+							nextHtml += '</span>';
+							nextHtml += '<span class="ui-icon ui-icon-back ui-icon-shadow">';
+							nextHtml += '</span>';
+							nextHtml += '</span>';
+							$("#back").html(nextHtml);
+						} else {
+							var nextHtml = "";
+							nextHtml += '<span class="ui-btn-inner">';
+							nextHtml += '<span class="ui-btn-text">';
+							nextHtml += '返回';
+							nextHtml += '</span>';
+							nextHtml += '<span class="ui-icon ui-icon-back ui-icon-shadow">';
+							nextHtml += '</span>';
+							nextHtml += '</span>';
+							$("#back").html(nextHtml);
+						}
+						$("#questions").html(data);
+					}
+				});
+	}
+	function beforQuestion() {
+		var classify = $("#classify").val();
+		var pageNumber = $("#pageNumber").val();
+		var total = $("#pageTotal").val();
+
+		pageNumber--;
+		if (pageNumber < 1) {
+			$.mobile.changePage("/allquestion.html");
+			return;
+		}
+
+		if (total == null) {
+			$("#ending").popup("open");
+			return;
+		}
+		$("#pageNumber").val(pageNumber);
+		$
+				.ajax({
+					type : "POST",
+					dataType : "html",
+					url : "@{news.NewsAction.questionList()}",
+					data : {
+						pageNumber : pageNumber,
+						classify : classify
+					},
+					success : function(data) {
+						if (total == pageNumber) {
+							var nextHtml = "";
+							nextHtml += '<span class="ui-btn-inner">';
+							nextHtml += '<span class="ui-btn-text">';
+							nextHtml += '提交';
+							nextHtml += '</span>';
+							nextHtml += '<span class="ui-icon ui-icon-forward ui-icon-shadow">';
+							nextHtml += '</span>';
+							nextHtml += '</span>';
+							$("#next").html(nextHtml);
+						} else {
+							var nextHtml = "";
+							nextHtml += '<span class="ui-btn-inner">';
+							nextHtml += '<span class="ui-btn-text">';
+							nextHtml += '下一题';
+							nextHtml += '</span>';
+							nextHtml += '<span class="ui-icon ui-icon-forward ui-icon-shadow">';
+							nextHtml += '</span>';
+							nextHtml += '</span>';
+							$("#next").html(nextHtml);
+						}
+						if (pageNumber > 1) {
+							var nextHtml = "";
+							nextHtml += '<span class="ui-btn-inner">';
+							nextHtml += '<span class="ui-btn-text">';
+							nextHtml += '上一题';
+							nextHtml += '</span>';
+							nextHtml += '<span class="ui-icon ui-icon-back ui-icon-shadow">';
+							nextHtml += '</span>';
+							nextHtml += '</span>';
+							$("#back").html(nextHtml);
+						} else {
+							var nextHtml = "";
+							nextHtml += '<span class="ui-btn-inner">';
+							nextHtml += '<span class="ui-btn-text">';
+							nextHtml += '返回';
+							nextHtml += '</span>';
+							nextHtml += '<span class="ui-icon ui-icon-back ui-icon-shadow">';
+							nextHtml += '</span>';
+							nextHtml += '</span>';
+							$("#back").html(nextHtml);
+						}
+						$("#questions").html(data);
+					}
+				});
+	}
+</script>
+<div data-role="page" id="questionList">
+	<input type="hidden" id="classify" value="${userInfo.type}">
+	<div data-role="header">
+		<a data-role="button" data-icon="back" data-inline="true"
+			href="javascript:beforQuestion();" id="back">返回</a> <a
+			data-role="button" data-icon="forward" data-inline="true"
+			href="javascript:nextQuestion();" data-transition="slide" id="next">下一题</a>
+		<h1>康众汽配连锁问卷调查</h1>
+	</div>
+	<div data-role="content">
+		<div data-role="fieldcontain" id="questions"></div>
+	</div>
+	#{if userInfo.type == 2}
+	<div data-role="popup" id="companyInfo" data-theme="a"
+		class="ui-corner-all">
+		<form action="@{saveResult}" method="post" id="saveResponse">
+			<input type="hidden" name="result" id="resultValue" /> <input
+				type="hidden" name="userInfo.type" value="1" />
+			<div style="padding: 10px 20px;">
+				<h3>恭喜您获得康众50元优惠码，为了激活优惠码请填写以下信息！</h3>
+				<label for="companyName" class="ui-hidden-accessible">企业全称:</label>
+				<input type="text" name="userInfo.company" id="companyName" value=""
+					placeholder="输入企业全称" class="required" data-theme="a" /> <label
+					for="userName" class="ui-hidden-accessible">帐号:</label> <input
+					type="text" name="userInfo.userName" id="companyUserName" value=""
+					placeholder="输入姓名" class="required" data-theme="a" /> <label
+					for="mobile" class="ui-hidden-accessible">手机号:</label> <input
+					type="text" name="userInfo.mobile" id="companyMobile" value=""
+					placeholder="输入手机号码" data-theme="a" class="required" />
+				<button type="button" data-theme="b" onclick="subInfo()">确定</button>
+			</div>
+		</form>
+	</div>
+	#{/if}
+	#{else}
+	<div data-role="popup" id="customerInfo" data-theme="a"
+		class="ui-corner-all">
+		<form action="@{saveResult}" method="post" id="saveResponse">
+			<input type="hidden" name="result" id="resultValue" /> <input
+				type="hidden" name="userInfo.type" value="2" />
+			<div style="padding: 10px 20px;">
+				<h3>恭喜您获得康众50元优惠码，为了激活优惠码请填写以下信息！</h3>
+				<label for="carNo" class="ui-hidden-accessible">车牌号:</label> <input
+					type="text" name="userInfo.otherInfo" id="carNo" value=""
+					placeholder="输入车牌号" class="required" data-theme="a" /> <label
+					for="userName" class="ui-hidden-accessible">帐号:</label> <input
+					type="text" name="userInfo.userName" id="userName" value=""
+					placeholder="输入姓名" class="required" data-theme="a" /> <label
+					for="mobile" class="ui-hidden-accessible">手机号:</label> <input
+					type="text" name="userInfo.mobile" id="mobile" value=""
+					placeholder="输入手机号码" data-theme="a" class="required" />
+				<button type="button" data-theme="b" onclick="subInfo()">确定</button>
+			</div>
+		</form>
+	</div>
+	#{/else}
+	<div data-role="popup" id="select" data-theme="a" class="ui-corner-all">
+		<div style="padding: 20px 40px;">
+			<h3>请选择！</h3>
+		</div>
+	</div>
+
+	<div data-role="popup" id="write" data-theme="a" class="ui-corner-all">
+		<div style="padding: 20px 40px;">
+			<h3>请填写内容！</h3>
+		</div>
+	</div>
+
+	<div data-role="popup" id="ending" data-theme="a" class="ui-corner-all">
+		<div style="padding: 20px 40px;">
+			<h3>暂无调查内容！</h3>
+		</div>
+	</div>
+
+</div>

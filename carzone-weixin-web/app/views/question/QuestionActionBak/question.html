@@ -1,0 +1,69 @@
+<!--  
+type=1单选2 多选3 问答4 排序
+-->
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('input[type=checkbox]').click(function() {
+			var id = $(this).attr("class").split("_")[0];
+			var maxLength = $("#" + id + "_maxLength").val() / 1;
+			if (maxLength != 0) {
+				var name = "input[class='" + id + "_question']";
+				$(name).attr('disabled', true);
+				if ($(name + ":checked").length >= maxLength) {
+					$(name + ":checked").attr('disabled', false);
+				} else {
+					$(name).attr('disabled', false);
+				}
+			}
+		});
+	})
+</script>
+<input type="hidden" name="pageTotal" id="pageTotal"
+	value="${pageTotal}" />
+<input type="hidden" name="pageNumber" id="pageNumber"
+	value="${pageNumber}" />
+<input type="hidden" name="pageSize" id="pageSize" value="${pageSize}" />
+
+#{list items:page.result, as:'question'}
+<input type="hidden" id="${question_index}_type"
+	value="${question?.type}" />
+<input type="hidden" id="${question_index}_id"
+	value="${question?.questionId}" />
+<input type="hidden" id="${question_index}_maxLength"
+	value="${question?.maxLength}" />
+<input type="hidden" id="${question_index}_minLength"
+	value="${question?.minLength}" />
+
+#{if question?.type == 1}
+<fieldset data-role="controlgroup">
+	<legend>${pageNumber}.${question?.question}</legend>
+	#{list items:question.answerList, as:'answer'} <input type="radio"
+		class="${question_index}_question" value="${answer.answerId}"
+		id="radio-${answer.answerId}" name="answer" /> <label
+		for="radio-${answer.answerId}"><em>${answer.answer}</em></label> <br>
+	#{/list}
+</fieldset>
+#{/if} #{elseif question?.type == 2}
+<fieldset data-role="controlgroup" data-type="horizontal">
+	<legend>${pageNumber}.${question?.question}</legend>
+	#{list items:question.answerList, as:'answer'} <input type="checkbox"
+		class="${question_index}_question" value="${answer.answerId}"
+		id="checkbox-${answer.answerId}" /> <label
+		for="checkbox-${answer.answerId}"><em>${answer.answer}</em></label> <br>
+	#{/list}
+</fieldset>
+#{/elseif} #{elseif question?.type == 3}
+<div data-role="fieldcontain">
+	<label for="textarea">${pageNumber}.${question?.question}</label>
+	<textarea cols="30" rows="8" name="textarea"
+		id="${question_index}_textarea" style="font-size: 15px;"
+		placeholder="${question?.suggestion}"></textarea>
+</div>
+#{/elseif} #{elseif question?.type == 4}
+<div data-role="fieldcontain">
+	<label for="textarea">${pageNumber}.${question?.question}</label>
+	<textarea cols="32" rows="5" name="textarea"
+		id="${question_index}_textarea" style="font-size: 15px;"
+		placeholder="${question?.suggestion}" onkeyup="clearNoNum(this)"></textarea>
+</div>
+#{/elseif} #{/list}

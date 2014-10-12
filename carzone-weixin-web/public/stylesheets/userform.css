@@ -1,0 +1,153 @@
+.demo {
+	position: relative;
+	background:#FFFFFF;
+}
+
+#disk {
+	width: 284px;
+	height: 284px;
+	background: url(/public/images/disk.jpg) no-repeat
+}
+
+#start {
+	width: 163px;
+	height: 320px;
+	position: absolute;
+	top: 0px;
+	left: 78px;
+}
+
+#start img {
+	cursor: pointer
+}
+
+.popup_box {
+	padding: 18px 10px 15px;
+	width: 100px;
+	display: none;
+	background: rgba(0, 0, 0, 0.75);
+	position: absolute;
+	top: 20px;
+	left: 50%;
+	margin-left: -60px;
+	border-radius: 5px;
+	color: #fff;
+	text-align: center
+}
+
+.popup_box span {
+	display: block;
+	height: 35px;
+	width: 35px;
+	margin: 0 auto;
+	background: url("http://mat1.gtimg.com/joke/wxfc/sprite.png") no-repeat
+		scroll 0 0;
+	background-size: 35px 160px;
+}
+
+.popup_box span.success {
+	
+}
+
+.popup_box span.fail {
+	background-position: 0 -45px
+}
+
+.popup_box p.state {
+	font-size: 15px;
+	margin-top: 10px
+}
+
+.popup_box p.tip {
+	color: #ffa800;
+	font-size: 14px;
+	margin-top: 15px;
+	line-height: 18px
+}
+
+.ap_btn_box a {
+	display: block;
+	height: 42px;
+	line-height: 42px;
+	background: -moz-linear-gradient(center top, rgb(1, 112, 185),
+		rgb(31, 152, 237)) repeat scroll 0% 0% transparent;
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+	text-align: center;
+	border-radius: 3px;
+}
+
+.cf:after,.item_box:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.name_box p {
+	position: absolute;
+	top: 20px;
+	right: 0px;
+	width: 98px;
+	height: 48px;
+	border: 1px solid rgb(149, 192, 218);
+	border-radius: 4px;
+	overflow: hidden;
+}
+
+.name_box p span.on {
+	background: -moz-linear-gradient(center top, rgb(1, 112, 185),
+		rgb(31, 152, 237)) repeat scroll 0% 0% transparent;
+	color: rgb(255, 255, 255);
+}
+
+.name_box p span {
+	width: 49px;
+	height: 48px;
+	color: rgb(186, 186, 186);
+	float: left;
+	text-align: center;
+	line-height: 48px;
+}
+
+.name_box {
+	padding: 20px 110px 0px 0px;
+	position: relative;
+}
+
+.name_box input {
+	width: 100%;
+	height: 48px;
+	background: none repeat scroll 0% 0% rgb(255, 255, 255);
+	border-radius: 4px;
+	border: 1px solid rgb(219, 219, 219);
+	color: rgb(188, 188, 188);
+	text-indent: 15px;
+	font-size: 18px;
+}
+
+.phone_box input {
+	width: 100%;
+	height: 20px;
+	border-radius: 4px;
+	border: 1px solid rgb(219, 219, 219);
+	color: rgb(188, 188, 188);
+	text-indent: 15px;
+	font-size: 12px;
+}
+
+input:focus,textarea:focus {
+	color: rgb(51, 51, 51) !important;
+}
+
+.gp_box {
+	font-family: "微软雅黑", "Arial", "Helvetica", sans-serif;
+	color: rgb(47, 47, 47);
+	font-size: 13px;
+}
+
+.gp_box h1 {
+	text-align: center;
+	font-size: 21px;
+	line-height: 32px;
+	margin-top: 22px;
+}

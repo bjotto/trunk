@@ -1,0 +1,10 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+<div data-role="page" id="questionList">
+	<div data-role="content">
+		<ul data-role="listview">
+			<!-- li><a href="/questions.html?type=1" rel="external">车主</a></li> -->
+			<li><a href="/questions.html?type=2" rel="external">企业（汽修厂、4S店等）</a>
+			</li>
+		</ul>
+	</div>
+</div>

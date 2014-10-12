@@ -1,0 +1,13 @@
+#{extends 'main.html' /} #{set title:'新品上市' /}
+
+<div data-role="page" id="first">
+	<div data-role="header">
+		<a data-rel="back" data-icon="back">返回</a>
+		<h1>康众汽配连锁</h1>
+	</div>
+	<div data-role="content">
+		<input type="file" />
+
+	</div>
+
+</div>

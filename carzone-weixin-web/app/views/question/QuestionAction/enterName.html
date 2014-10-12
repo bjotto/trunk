@@ -1,0 +1,171 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+<script type="text/javascript">
+	function checkall() {
+		if (checkCompany() && checkUserName() && checkMobile()) {
+			 var pos = 0;
+			 var info = 0;
+			 $("input[name='user.postion']:checkbox").each(function(){ 
+	                if($(this).attr("checked")){
+	                	pos = 1;
+	                }
+	            });
+			 $("input[name='user.otherInfo']:checkbox").each(function(){ 
+	                if($(this).attr("checked")){
+	                	info = 1;
+	                }
+	            })
+			 if(pos == 0){
+				 alert("请选择您觉得最精彩的栏目");
+				return;
+			 }
+			 if(info == 0){
+				 alert("请选择您觉得本期哪些栏目需要改进");
+				return;
+			 }
+			 $("#id-submit").submit();
+		}
+	}
+	function choseNum(value) {
+		if (value)
+			value = value / 1;
+		switch (value) {
+		case 1:
+			$("#person-show").show();
+			$("#company-show").hide();
+			$("#userType").val(6);
+			break;
+		case 2:
+			$("#company-show").show();
+			$("#person-show").hide();
+			$("#userType").val(7);
+			break;
+		}
+	}
+	function checkCompany() {
+		var userType = $("#userType").val() / 1;
+		if (userType == 7) {
+			var value = $("#company").val();
+			if (value == null || value == "") {
+				alert("请填写单位名称！");
+				$("#company").focus();
+				return false;
+			}
+		}
+		return true;
+	}
+	function checkUserName() {
+		var userType = $("#userType").val() / 1;
+		var value = $(".userName:eq(0)").val();
+
+		if (value == null || value == "") {
+			alert("请填写姓名！");
+			return false;
+		}
+		$("#userNameId").val(value);
+		return true;
+	}
+	function checkMobile() {
+		var userType = $("#userType").val() / 1;
+		var value = $(".mobile:eq(0)").val();
+
+		if (value == null || value == "") {
+			alert("请填写手机号码！");
+			return false;
+		}
+		if (!checkMobileNumber(value)) {
+			alert("请填写正确的手机号码！");
+			return false;
+		}
+		return true;
+	}
+	function checkMobileNumber(mobile) {
+		var reg = /^13[0-9]{9}$|^15[012356789]{1}[0-9]{8}$|^147[0-9]{8}$|^18[0-9]{9}$/;
+		if (reg.test(mobile)) {
+			return true;
+		} else
+			return false;
+	}
+</script>
+
+<div data-role="page">
+	<div data-role="header">
+		<h1>有奖问答</h1>
+	</div>
+	<div data-role="content">
+		<form method="post" action="@{saveUser}" enctype="multipart/form-data">
+			<div data-role="fieldcontain">
+				<fieldset data-role="controlgroup" data-type="horizontal">
+					<legend>1、本期您觉得最精彩的栏目是：</legend>
+					<input type="checkbox" name="user.postion" id="postion-a" value="1" />
+					<label for="postion-a">康众动态</label> <input type="checkbox"
+						name="user.postion" id="postion-b" value="2" /> <label
+						for="postion-b">每月一星</label> <input type="checkbox"
+						name="user.postion" id="postion-c" value="3" /> <label
+						for="postion-c">美图秀秀</label> <input type="checkbox"
+						name="user.postion" id="postion-d" value="4" /> <label
+						for="postion-d">知识分享</label><input type="checkbox"
+						name="user.postion" id="postion-e" value="5" /> <label
+						for="postion-e">会员天地</label> <input type="checkbox"
+						name="user.postion" id="postion-f" value="6" /> <label
+						for="postion-f">汽修学堂</label><input type="checkbox"
+						name="user.postion" id="postion-g" value="7" /> <label
+						for="postion-g">专家讲座</label>
+				</fieldset>
+				<fieldset data-role="controlgroup" data-type="horizontal">
+					<legend>2、您觉得本期哪些栏目需要改进：</legend>
+					<input type="checkbox" name="user.otherInfo" id="other_info-a"
+						value="1" /> <label for="other_info-a">康众动态</label> <input
+						type="checkbox" name="user.otherInfo" id="other_info-b" value="2" />
+					<label for="other_info-b">每月一星</label> <input type="checkbox"
+						name="user.otherInfo" id="other_info-c" value="3" /> <label
+						for="other_info-c">美图秀秀</label> <input type="checkbox"
+						name="user.otherInfo" id="other_info-d" value="4" /> <label
+						for="other_info-d">知识分享</label><input type="checkbox"
+						name="user.otherInfo" id="other_info-e" value="5" /> <label
+						for="other_info-e">会员天地</label> <input type="checkbox"
+						name="user.otherInfo" id="other_info-f" value="6" /> <label
+						for="other_info-f">汽修学堂</label><input type="checkbox"
+						name="user.otherInfo" id="other_info-g" value="7" /> <label
+						for="other_info-g">专家讲座</label>
+				</fieldset>
+				<div data-role="fieldcontain">
+					<label for="log1">3、您的其他意见：</label>
+					<textarea class="userLog" id="log1" name="user.userLog"></textarea>
+				</div>
+				<input type="hidden" name="user.type" value="11" />
+			</div>
+			<!--  div data-role="popup" id="userInfo" data-theme="a"
+				class="ui-corner-all"-->
+			<div data-role="content">
+				<p>
+					<span style="color: red;">为了方便联系您，请正确填写下面信息</span>
+				</p>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="userName">姓名：</label> <input type="text"
+					class="userName" name="user.userName" id="userName" />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="mobile">手机号码：</label> <input type="number"
+					class="mobile" name="user.mobile" id="mobile" />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="company">工作单位：</label> <input type="text"
+					name="user.company" id="company" />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="company">地址：</label> <input type="text"
+					name="user.realName" id="company" />
+			</div>
+			<fieldset class="ui-grid-a">
+				<div class="ui-block-a">
+					<button type="reset" data-theme="c">取消</button>
+				</div>
+				<div class="ui-block-b">
+					<button type="button" data-theme="b" id="id-submit"
+						onclick="checkall()">提交</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

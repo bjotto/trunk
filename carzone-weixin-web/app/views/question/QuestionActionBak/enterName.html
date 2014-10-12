@@ -1,0 +1,162 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+<script type="text/javascript">
+	$(document).on("pagecreate", function(event) {
+		$("#radio-view-a").click();
+	});
+	function checkall() {
+		if (checkSuggest() && checkCompany() && checkUserName()
+				 && checkMobile()) {
+			$("#id-submit").submit();
+		}
+	}
+	function choseNum(value) {
+		if (value)
+			value = value / 1;
+		switch (value) {
+		case 1:
+			$("#person-show").show();
+			$("#company-show").hide();
+			$("#userType").val(6);
+			break;
+		case 2:
+			$("#company-show").show();
+			$("#person-show").hide();
+			$("#userType").val(7);
+			break;
+		}
+	}
+	function checkSuggest() {
+		var pdtSug  = $(".userLog:eq(0)").val();
+		var serSug  = $(".userLog:eq(1)").val();
+		var otherSug = $(".userLog:eq(2)").val();
+		var value = pdtSug+"|&" +serSug+"|&"+otherSug;
+		if ((pdtSug == null || pdtSug == "")&&
+				(serSug == null || serSug == "")&&
+				(otherSug == null || otherSug == "")) {
+			alert("请填写意见内容！");
+			return false;
+		}
+		$("#userLogId").val(value);
+		return true;
+
+	}
+	function checkCompany() {
+		var userType = $("#userType").val()/1;
+		if(userType == 7){
+			var value = $("#company").val();
+			if (value == null || value == "") {
+				alert("请填写单位名称！");
+				$("#company").focus();
+				return false;
+			}
+		}
+		return true;
+	}
+	function checkUserName() {
+		var userType = $("#userType").val()/1;
+		var value;
+		if(userType == 6){
+			value = $(".userName:eq(0)").val();
+		}else{
+			value = $(".userName:eq(1)").val();
+		}
+		if (value == null || value == "") {
+			alert("请填写联系人！");
+			return false;
+		}
+		$("#userNameId").val(value);
+		return true;
+	}
+	function checkMobile() {
+		var userType = $("#userType").val()/1;
+		var value;
+		if(userType == 6){
+			value = $(".mobile:eq(0)").val();
+		}else{
+			value = $(".mobile:eq(1)").val();
+		}
+		if (value == null || value == "") {
+			alert("请填写手机号码！");
+			return false;
+		}
+		if (!checkMobileNumber(value)) {
+			alert("请填写正确的手机号码！");
+			return false;
+		}
+		$("#mobileId").val(value);
+		return true;
+	}
+	function checkMobileNumber(mobile) {
+		var reg = /^13[0-9]{9}$|^15[012356789]{1}[0-9]{8}$|^147[0-9]{8}$|^18[0-9]{9}$/;
+		if (reg.test(mobile)) {
+			return true;
+		} else
+			return false;
+	}
+</script>
+
+<div data-role="page">
+	<div data-role="header">
+		<h1>用户反馈信息</h1>
+	</div>
+	<div data-role="content">
+		<form method="post" action="@{saveUser}" enctype="multipart/form-data">
+			<div data-role="fieldcontain">
+				<fieldset data-role="controlgroup" data-type="horizontal">
+					<legend>用户类型：</legend>
+					<input type="radio" name="radio-view" id="radio-view-a" value="1"
+						onclick="choseNum(value)" /> <label for="radio-view-a">个人</label>
+					<input type="radio" name="radio-view" id="radio-view-b" value="2"
+						onclick="choseNum(value)" /> <label for="radio-view-b">单位</label>
+				</fieldset>
+				<input type="hidden" name="user.type" value="6" id="userType"/>
+			</div>
+			<div id="person-show" style="display: blank;">
+				<div data-role="fieldcontain">
+					<label for="userName1">姓名：</label> <input type="text"
+						 class="userName" value="${user.userName}" id="userName1"/>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="mobile1">手机号码：</label> <input type="number"
+						class="mobile" value="${user.mobile}" id="mobile1" />
+				</div>
+			</div>
+			<div id="company-show" style="display: none">
+				<div data-role="fieldcontain">
+					<label for="company">单位名称：</label> <input type="text"
+						name="user.company" id="company" value="${user.company}" />
+				</div>
+				<div data-role="fieldcontain">
+					<label for="userName2">联系人：</label> <input type="text"
+						class="userName" value="${user.userName}" id="userName2"/>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="mobile2">手机号码：</label> <input type="number"
+						 class="mobile" value="${user.mobile}" id="mobile2"/>
+				</div>
+			</div>
+			<input type="hidden" name="user.userName" id="userNameId"/>
+			<input type="hidden" name="user.mobile" id="mobileId"/>
+			
+			<div data-role="fieldcontain">
+				<label for="log1">产品意见内容：</label> <textarea class="userLog" id="log1"></textarea>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="log2">服务意见内容：</label> <textarea class="userLog" id="log2"></textarea>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="log3">其他意见内容：</label> <textarea class="userLog" id="log3"></textarea>
+			</div>
+			<input type="hidden" name="user.userLog" id="userLogId"/>
+			<fieldset class="ui-grid-a">
+				<div class="ui-block-a">
+					<button type="reset" data-theme="c">取消</button>
+				</div>
+				<div class="ui-block-b">
+					<button type="button" data-theme="b" id="id-submit"
+						onclick="checkall()">提交</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

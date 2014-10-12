@@ -1,0 +1,114 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+<script type="text/javascript"
+	src="@{'/public/javascripts/jQueryRotate.2.2.js'}"></script>
+<script type="text/javascript"
+	src="@{'/public/javascripts/jquery.easing.min.js'}"></script>
+<link href="/public/stylesheets/userform.css" rel="stylesheet"
+	type="text/css" />
+
+<script type="text/javascript">
+	var timer;
+	var time = 0;
+	$(function() {
+		if ('${text}' == "") {
+			time = 1;
+			$("#lotteryBtn").rotate('${angle}' / 1);
+			toResult();
+		}else{
+			setTimeout(function() {
+				rotateFunc();
+				time++;
+			}, 2000);
+		}
+		var rotateFunc = function() {
+			//awards:奖项，angle:奖项对应的角度，text:提示文字
+			var angle = '${angle}' / 1;
+			var msg = '${text}';
+			var text = '';
+			if (msg.length != 0) {
+				text = "恭喜您中了" + msg + "元";
+			} else {
+				text = "很遗憾！没有中奖";
+			}
+			$('#lotteryBtn').stopRotate();
+			$("#lotteryBtn").rotate({
+				angle : 0,
+				duration : 9000,
+				animateTo : angle + 2880, //angle是图片上各奖项对应的角度，1440是我要让指针旋转4圈。所以最后的结束的角度就是这样子^^
+				callback : function() {
+					showTip(true, text);
+					setTimeout(function() {
+						toResult();
+					}, 3000);
+				}
+			});
+		};
+		
+		$("#lotteryBtn").rotate({
+			bind : {
+				click : function() {
+					if (time == 0) {
+						rotateFunc();
+						time++;
+					} else {
+						showTip(true, "您已经抽过奖了，谢谢使用！");
+					}
+
+				}
+			}
+		});
+	});
+	function showTip(success, msg) {
+		msg = msg || '';
+		var tip = $('#popup_box');
+		var html = '';
+		if (success) {
+			html = '<span class="success"></span>' + '<p class="state"></p>';
+		} else {
+			html = '<span class="fail"></span>' + '<p class="state">提交失败</p>';
+		}
+		if (msg) {
+			html += '<p class="tip">' + msg + '</p>';
+		}
+		tip.html(html);
+		tip.attr("style", "display:block");
+		if (timer != null) {
+			clearTimeout(timer);
+		}
+		timer = setTimeout(function() {
+			$('#popup_box').attr("style", "display:none");
+			timer = null;
+		}, 3000);
+	}
+	function toResult(){
+		var urlTemp =  #{jsAction @result(':userId') /}
+		var url = urlTemp({userId:'${userId}'});
+		window.location.href= url;
+	}
+</script>
+
+
+<div data-role="page" id="turnTable">
+	<div data-role="header">
+		<h1>康众汽配连锁</h1>
+	</div>
+	<div data-role="content">
+		<div id="main">
+			<div class="msg"></div>
+			<div class="demo">
+				<div id="disk"></div>
+				<div id="start">
+					<img src="/public/images/start.png" id="lotteryBtn">
+				</div>
+			</div>
+			<div id="directions" style="display:none;">
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="popup_box" class="popup_box" style="display: none;">
+	<span class="success"></span>
+	<p class="state">提交成功</p>
+	<p class="tip">开始转盘</p>
+</div>

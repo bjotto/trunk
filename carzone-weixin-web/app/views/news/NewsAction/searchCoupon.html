@@ -1,0 +1,35 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+<script type="text/javascript">
+	function search() {
+		$("#cusInfo").popup("open");
+	}
+	function subInfo() {
+		$("#search").submit();
+	}
+	$("#searchPage").live("pagecreate", function() {
+		setTimeout('search()',1000);
+	});
+</script>
+
+<div data-role="page" id="searchPage">
+	<div data-role="content">
+		<ul data-role="listview">
+			<li><a href="javascript:search();" rel="external">优惠码查询</a></li>
+		</ul>
+	</div>
+	<div data-role="popup" id="cusInfo" data-theme="a"
+		class="ui-corner-all">
+		<form action="@{searchResult}" method="post" id="search">
+			<div style="padding: 10px 20px;">
+				<h3>查询优惠码，输入以下信息</h3>
+				<input type="text" name="userInfo.otherInfo" id="carNo" value=""
+					placeholder="输入企业全称" class="required" data-theme="a" /> <input
+					type="text" name="userInfo.userName" id="userName" value=""
+					placeholder="输入姓名" class="required" data-theme="a" /> <input
+					type="text" name="userInfo.mobile" id="mobile" value=""
+					placeholder="输入手机号码" data-theme="a" class="required" />
+				<button type="button" data-theme="b" onclick="subInfo()">确定</button>
+			</div>
+		</form>
+	</div>
+</div>

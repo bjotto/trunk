@@ -1,0 +1,57 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+
+<form action="@{saveResult}" method="post" id="saveResponse"
+	data-ajax="false">
+	<div data-role="page" id="page1">
+		<div data-role="header">
+			<a data-rel="back" data-role="button" data-icon="back"
+				data-inline="true">返回</a> <a data-role="button" data-icon="forward"
+				data-inline="true" href="#page2" data-transition="slide">下一题</a>
+			<h1>
+				<span onclick="returnMain()" style="color: #F08913;"> 康众汽配连锁问卷调查</span>
+			</h1>
+		</div>
+		<div data-role="content">
+			<fieldset data-role="controlgroup" data-type="horizontal">
+				<legend>作为修理厂负责人，您选择配件供应商的依次顺序:</legend>
+				<input type="checkbox" name="checkbox-1" id="checkbox-1"
+					class="question1" value="1" /> <label for="checkbox-1">产品齐全</label>
+				<input type="checkbox" name="checkbox-7" id="checkbox-7"
+					class="question1" /> <label for="checkbox-7"><em>配送及时</em></label>
+				<input type="checkbox" name="checkbox-8" id="checkbox-8"
+					class="question1" /> <label for="checkbox-8">提供质保</label> <input
+					type="checkbox" name="checkbox-9" id="checkbox-9" class="question1" />
+				<label for="checkbox-9">价格便宜</label> <input type="checkbox"
+					name="checkbox-10" id="checkbox-10" class="question1" /> <label
+					for="checkbox-10">信用支持</label> <input type="hidden" name="name"
+					id="result1" />
+			</fieldset>
+		</div>
+	</div>
+	<div data-role="page" id="page2">
+		<div data-role="header">
+			<h1>
+				<span onclick="returnMain()" style="color: #F08913;"> 康众汽配连锁问卷调查</span>
+			</h1>
+			<a data-rel="back" data-role="button" data-icon="back"
+				data-inline="true">返回</a> <a data-role="button" data-icon="save"
+				data-inline="true" onclick="save()">保存</a>
+		</div>
+		<div data-role="content">
+			<fieldset data-role="controlgroup" data-type="horizontal">
+				<legend>作为修理厂负责人，您选择配件供应商的依次顺序:</legend>
+				<input type="checkbox" name="checkbox-1" id="checkbox-1"
+					class="question2" value="1" /> <label for="checkbox-1">产品齐全</label>
+				<input type="checkbox" name="checkbox-7" id="checkbox-7"
+					class="question2" /> <label for="checkbox-7"><em>配送及时</em></label>
+				<input type="checkbox" name="checkbox-8" id="checkbox-8"
+					class="question2" /> <label for="checkbox-8">提供质保</label> <input
+					type="checkbox" name="checkbox-9" id="checkbox-9" class="question2" />
+				<label for="checkbox-9">价格便宜</label> <input type="checkbox"
+					name="checkbox-10" id="checkbox-10" class="question2" /> <label
+					for="checkbox-10">信用支持</label> <input type="hidden" name="name2"
+					id="result2" />
+			</fieldset>
+		</div>
+	</div>
+</form>

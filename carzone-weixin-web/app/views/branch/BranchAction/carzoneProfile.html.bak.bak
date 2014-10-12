@@ -1,0 +1,44 @@
+#{extends 'main.html' /} #{set title:'公司介绍' /}
+<div data-role="page" id="page2">
+	<div data-role="header">
+		<a data-rel="back" data-icon="back">返回</a>
+		<h1>康众汽配连锁</h1>
+	</div>
+	<div data-role="content">
+		<img style="width: 100%" src="@{'/public/images/branch/profile.png'}"
+			data-inset="true">
+		<p>“康众汽配连锁”是汽车后市场配件销售企业，全国目前已有70多家服务网点，分布于北京、天津、江苏、河北、河南、甘肃、贵州等省市，专业团队成员超过600人，服务于数万家汽修企业。</p>
+		<br>
+		<p>目前是博世、盖茨、舍弗勒、电装、索菲玛、菲罗多、雷贝斯托、欧司朗、飞利浦、ENEOS、3M等众多国际知名品牌经销商。</p>
+		<h2>经营理念：</h2>
+		<p>
+			坚持"品牌产品、授权经营"的原则；<br> 信守"不做假货、不做暴利"的承诺；<br>
+			秉承"快速、准确、全系列"的业务发展宗旨。
+		</p>
+		<br>
+		<p>率先倡导"系统产品专业服务、关键项目专家支持"等服务营销理念赢得了众多供应商和数万家客户的信赖。</p>
+		<br>
+		<p>企业致力于汽车售后市场中典范性现代服务企业的建设，有志成为效率先进，阳光规范化的行业领先者。</p>
+	</div>
+</div>
+
+<div data-role="page" id="page1">
+	<div data-role="header">
+		<h1>康众汽配连锁</h1>
+	</div>
+	<div data-role="content">
+		<img style="width: 100%" src="@{'/public/images/branch/profile.png'}">
+		<p>全国统一客服电话：4008884909</p>
+		<p>邮箱：4008884909@carzong360.com</p>
+		<p>传真：025-66618912</p>
+		<p>康众汽配连锁官网：</p>
+		<p>
+			<a href="http://www.carzone.cn">http://www.carzone.cn</a>
+		</p>
+		<p>康众天猫官方专营店：</p>
+		<p>
+			<a href="http://kzcp.tmall.com"> http://kzcp.tmall.com</a>
+		</p>
+	</div>
+</div>
+

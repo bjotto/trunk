@@ -1,0 +1,35 @@
+#{list items:qtpage.result, as:'question'}
+<input type="hidden" name="pageTotal" id="pageTotal"
+	value="${pageTotal}" />
+<input type="hidden" name="pageNumber" id="pageNumber"
+	value="${pageNumber}" />
+<input type="hidden" name="questionType" id="questionType"
+	value="${question?.type}" />
+<input type="hidden" name="questionId" id="questionId"
+	value="${question?.questionId}" />
+
+#{if question?.type == 1}
+<fieldset data-role="controlgroup">  
+<legend>${pageNumber}.${question?.question}:</legend>
+#{list items:anpage.result, as:'answer'}
+<input type="radio" class="question" value="${answer_index}"
+	id="radio-${answer_index}" name="answer"/>
+<label for="radio-${answer_index}"><em>${answer_index}.${answer.answer}</em></label>
+<br>
+#{/list} 
+</fieldset>
+#{/if} #{elseif question?.type == 2}
+<legend>${pageNumber}.${question?.question}:</legend>
+#{list items:anpage.result, as:'answer'}
+<fieldset data-role="controlgroup" data-type="horizontal">
+	<input type="checkbox" class="question" value="${answer_index}"
+		id="checkbox-${answer_index}" /> <label
+		for="checkbox-${answer_index}"><em>${answer_index}.${answer.answer}</em></label>
+	<br> #{/list}
+</fieldset>
+#{/elseif} #{elseif question?.type == 3}
+<div data-role="fieldcontain">
+	<label for="textarea">${pageNumber}.${question?.question}: </label>
+	<textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
+</div>
+#{/elseif} #{/list}

@@ -1,0 +1,58 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                       Application.index
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}
+
+
+#门店信息
+
+GET	/listProvinces.html		branch.BranchAction.listProvinces
+GET /getProvinces.html		branch.BranchAction.getProvinces
+
+#产品中心
+GET /newproduct.html		product.ProductAction.newproduct
+GET /carzoneBrands.html		product.ProductAction.carzoneBrands
+GET /carzoneProducts.html	product.ProductAction.carzoneProducts
+
+#康众公司
+GET /carzoneProfile.html 	branch.BranchAction.carzoneProfile
+
+
+#新闻中心
+GET /allquestion.html		news.NewsAction.allquestion
+GET /questions.html			news.NewsAction.questions
+GET /searchCoupon.html		news.NewsAction.searchCoupon
+GET /searchResult.html		news.NewsAction.searchResult
+GET /newQuestionnair.html	news.NewsAction.newQuestionnair
+GET /carzoneDevelop.html	news.NewsAction.carzoneDevelop
+GET	/summary.html			news.NewsAction.summary
+GET	/saveCarzone315.html	news.NewsAction.saveCarzone315
+
+#促销模块
+GET /userInfo.html			promotions.PromotionsAction.userInfo
+GET /lottery.html			promotions.PromotionsAction.lottery
+
+
+#调查问卷
+GET /questionnaires.html		question.QuestionAction.questionnaires
+GET /feedback.html				question.QuestionAction.enterName
+GET /success.html				question.QuestionAction.success
+
+
+#汽修学堂
+GET /enterName.html			qxxt.QxxtAction.enterName
+GET /success.html			qxxt.QxxtAction.success
+
+
+

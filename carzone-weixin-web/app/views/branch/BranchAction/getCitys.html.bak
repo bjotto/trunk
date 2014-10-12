@@ -1,0 +1,21 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+<script type="text/javascript">
+$("#citys").live("pagecreate",function(){
+	$('li[class="city"]').click(function(){
+		var city = $(this).attr("city");
+		var urlTemp =  #{jsAction @branch.BranchAction.getBranchs(':city') /};
+	    var url = urlTemp({city:city});
+	    window.location.href=url;
+	});
+})
+</script>
+<div data-role="page" id="citys">
+	<div data-role="content">
+		<ul data-role="listview" data-filter="true" id="citylist"
+			data-filter-placeholder='请输入城市'>
+			#{list items:citys, as:'city'}
+			<li class="city" city="${city.city}"><a>${city.city} <span class="ui-li-count">${city.total}家门店</span></a></li>
+			#{/list}
+		</ul>
+	</div>
+</div>

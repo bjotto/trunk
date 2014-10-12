@@ -1,0 +1,17 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+<script type="text/javascript"
+	src="@{'/public/javascripts/jQueryRotate.2.2.js'}"></script>
+<script type="text/javascript"
+	src="@{'/public/javascripts/jquery.easing.min.js'}"></script>
+<link href="/public/stylesheets/userform.css" rel="stylesheet"
+	type="text/css" />
+<div data-role="page" id="turnTable">
+	<div data-role="header">
+		<h1>康众汽配连锁</h1>
+	</div>
+	<div data-role="content">
+		<h1>活动已结束</h1>
+	</div>
+
+	
+</div>

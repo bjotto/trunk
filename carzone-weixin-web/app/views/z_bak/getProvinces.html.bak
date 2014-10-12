@@ -1,0 +1,65 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+
+
+<div data-role="page" id="myPage">
+	<!-- 
+	<div data-role="header" data-position="inline">
+		<a data-rel="back" data-icon="back">返回</a>
+		<h1>康众汽配连锁</h1>
+	</div>
+	 -->
+	<!-- /header -->
+	<div data-role="content">
+		<!-- 
+		<ul data-role="listview" data-filter="true" data-filter-placeholder='请输入省份'>
+			#{list items:provinces, as:'province'}
+			<li><a href="javascript:getcity('${province}');">${province}</a></li>
+			#{/list}
+		</ul>
+		 -->
+		<!-- 
+		<ul data-role="listview" data-filter="true"
+			data-filter-placeholder='请输入省份'>
+			#{list items:provinceMaps, as:'province'}
+			<li>
+				<h3>${province.key}</h3>
+				<ul data-filter="true" data-filter-placeholder='请输入城市'>
+					#{list items:province.value, as:'city'}
+					<li><div>${city.key}</div> <span class="ui-li-count">${city.value.size}</span>
+						<ul>
+							#{list items:city.value, as:'branch'}
+							<li><h3>${branch?.shop}</h3>
+								<p>地址：${branch?.county}${branch?.address}</p>
+								<p> 电话：<a
+								href="tel:${branch?.phone}">${branch?.phone}</a></p>
+							</li> #{/list}
+						</ul></li> #{/list}
+				</ul>
+			</li> #{/list}
+			
+		</ul>
+		 -->
+
+		<ul data-role="listview" data-filter="true" id="col_test"
+			data-filter-placeholder='请输入省份' data-header-theme="a">
+			#{list items:provinceMaps, as:'province'}
+			<li>
+				<h3 data-theme="a">${province.key.province}</h3> <span
+				class="ui-li-count">${province.key.total}</span>
+				<ul data-filter="true" data-filter-placeholder='请输入城市'>
+					#{list items:province.value, as:'city'}
+					<li><div>${city.key}</div> <span class="ui-li-count">${city.value.size}</span>
+						<ul>
+							#{list items:city.value, as:'branch'}
+							<li><h3>${branch?.shop}</h3>
+								<p>地址：${branch?.county}${branch?.address}</p>
+								<p>
+									电话：<a href="tel:${branch?.phone}">${branch?.phone}</a>
+								</p></li> #{/list}
+						</ul></li> #{/list}
+				</ul>
+			</li> #{/list}
+
+		</ul>
+	</div>
+</div>

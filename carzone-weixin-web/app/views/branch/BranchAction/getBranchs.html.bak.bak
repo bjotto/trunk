@@ -1,0 +1,13 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+<div data-role="page" id="citys">
+	<div data-role="content">
+		<ul data-role="listview">
+			#{list items:branchs, as:'branch'}
+			<li><h3>${branch?.shop}</h3>
+				<p>地址：${branch?.county}${branch?.address}</p>
+				<p>
+					电话：<a href="tel:${branch?.phone}">${branch?.phone}</a>
+				</p></li> #{/list}
+		</ul>
+	</div>
+</div>

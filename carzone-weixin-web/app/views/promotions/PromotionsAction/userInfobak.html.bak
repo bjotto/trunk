@@ -1,0 +1,152 @@
+#{extends 'main.html' /} #{set title:'康众汽配连锁' /}
+<script type="text/javascript"
+	src="@{'/public/javascripts/jQueryRotate.2.2.js'}"></script>
+<script type="text/javascript"
+	src="@{'/public/javascripts/jquery.easing.min.js'}"></script>
+<link href="/public/stylesheets/userform.css" rel="stylesheet"
+	type="text/css" />
+<script>
+	var timer;
+	$(function() {
+		$("#lotteryBtn").rotate({
+			bind : {
+				click : function() {
+					$("#customerInfo").popup("open");
+					$("#realName").focus();
+				}
+			}
+		});
+		$("#sex_male").click(function() {
+			$(this).attr("class", "on");
+			$("#sex_female").attr("class", "");
+
+		})
+		$("#sex_female").click(function() {
+			$(this).attr("class", "on");
+			$("#sex_male").attr("class", "");
+		})
+	})
+	function formChecks() {
+		if (mytrim($('#realName').val()) == '请输入姓名') {
+			showTip(false, '请填写姓名');
+			$("#customerInfo").popup("open");
+			$("#realName").focus();
+			return;
+		}
+		if ($('#realName').val().length > 10) {
+			showTip(false, '名字太长');
+			$("#customerInfo").popup("open");
+			$("#realName").focus();
+			return;
+		}
+		if (mytrim($("#userName").val()) == '请输入微信号（注意是微信号）') {
+			showTip(false, '请填写微信号');
+			$("#customerInfo").popup("open");
+			$("#userName").focus();
+			return;
+		}
+		if (mytrim($('#phone').val()) == '请输入手机号') {
+			showTip(false, '请填写手机号');
+			$("#customerInfo").popup("open");
+			$("#phone").focus();
+			return;
+		}
+		if (!checkMobile(mytrim($('#phone').val()))) {
+			showTip(false, '请填写正确的手机号');
+			$("#customerInfo").popup("open");
+			$("#phone").focus();
+			return;
+		}
+		$('#post_form').submit();
+	}
+	function checkMobile(mobile) {
+		var reg = /^13[0-9]{9}$|^15[012356789]{1}[0-9]{8}$|^147[0-9]{8}$|^18[0-9]{9}$/;
+		if (reg.test(mobile)) {
+			return true;
+		} else
+			return false;
+	}
+	function mytrim(strs) {
+		return strs.replace(/(^\s*)|(\s*$)/g, "");
+	}
+	function showTip(success, msg) {
+		msg = msg || '';
+		var tip = $('#popup_box');
+		var html = '';
+		if (success) {
+			html = '<span class="success"></span>'
+					+ '<p class="state">提交成功</p>';
+		} else {
+			html = '<span class="fail"></span>' + '<p class="state">提交失败</p>';
+		}
+		if (msg) {
+			html += '<p class="tip">' + msg + '</p>';
+		}
+		tip.html(html);
+		tip.attr("style", "display:block");
+		if (timer != null) {
+			clearTimeout(timer);
+		}
+		timer = setTimeout(function() {
+			$('#popup_box').attr("style", "display:none");
+			timer = null;
+		}, 3000);
+	}
+	function clearTimeout(timer) {
+		timer = null;
+	}
+</script>
+<div data-role="page" id="turnTable">
+	<div data-role="header">
+		<h1>康众汽配连锁</h1>
+	</div>
+	<div data-role="content">
+		<div id="main">
+			<div class="msg"></div>
+			<div class="demo">
+				<div id="disk"></div>
+				<div id="start">
+					<img src="/public/images/start.png" id="lotteryBtn">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div data-role="popup" id="customerInfo" data-theme="a"
+		class="ui-corner-all">
+		<div style="padding: 10px 20px;">
+			<h3>100%中奖，为方便兑奖，请您先提供以下信息呦</h3>
+			<div class="ap_fm_box">
+				<form id="post_form" method="post" action="@{save()}" target="_self">
+					<input type="hidden" name="tbCzUser.type" value="3" />
+					<div class="phone_box">
+						<input id="realName" name="tbCzUser.realName" type="text"
+							value="请输入姓名" placeholder="请输入姓名"
+							onblur="this.value=(this.value=='')?'请输入姓名':this.value"
+							onfocus="this.value=(this.value=='请输入姓名')?'':this.value" />
+					</div>
+					<div class="phone_box">
+						<input type="text" id="userName" name="tbCzUser.userName"
+							value="请输入微信号（注意是微信号）" placeholder="请输入微信号（注意是微信号）"
+							onblur="this.value=(this.value=='')?'请输入微信号（注意是微信号）':this.value"
+							onfocus="this.value=(this.value=='请输入微信���（注意是微信号）')?'':this.value" />
+					</div>
+					<div class="phone_box">
+						<input type="text" id="phone" name="tbCzUser.mobile" value="请输入手机号"
+							onblur="this.value=(this.value=='')?'请输入手机号':this.value;" placeholder="请输入手机号"
+							onfocus="this.value=(this.value=='请输入手机号')?'':this.value;" />
+					</div>
+					<div>
+						<a data-role="button" href="javascript:formChecks();"
+							data-theme="b">提交</a>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div id="popup_box" class="popup_box" style="display: none;">
+			<span class="success"></span>
+			<p class="state">提交成功</p>
+			<p class="tip">开始转盘</p>
+		</div>
+	</div>
+</div>
